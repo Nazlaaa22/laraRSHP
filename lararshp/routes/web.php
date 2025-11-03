@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 Auth::routes();
 use App\Http\Controllers\Admin\DashboardAdminController;
+use App\Http\Controllers\Admin\JenisHewanController;
 
 Route::middleware(['isAdministrator'])->group(function () {
     Route::get('/admin/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
@@ -72,3 +73,15 @@ Route::get('/admin/user', [AdminController::class, 'user']);
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/jenis', [JenisHewanController::class, 'index'])->name('jenis.index');
+    Route::get('/jenis/create', [JenisHewanController::class, 'create'])->name('jenis.create');
+    Route::post('/jenis', [JenisHewanController::class, 'store'])->name('jenis.store');
+    
+    // Tambahkan dua baris ini 👇
+    Route::get('/jenis/{id}/edit', [JenisHewanController::class, 'edit'])->name('jenis.edit');
+    Route::put('/jenis/{id}', [JenisHewanController::class, 'update'])->name('jenis.update');
+    Route::delete('/jenis/{id}', [JenisHewanController::class, 'destroy'])->name('jenis.destroy');
+});
+

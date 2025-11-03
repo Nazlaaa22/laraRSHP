@@ -16,7 +16,7 @@ class AdminController extends Controller
     public function jenis()
     {
         $data = DB::table('jenis_hewan')->get();
-        return view('admin.jenis', ['data' => $data]);
+        return view('admin.jenis.index', ['data' => $data]);
     }
 
     // ✅ 2. Daftar Ras Hewan
