@@ -9,15 +9,11 @@ class RasHewan extends Model
 {
     use HasFactory;
 
-    // pastikan nama tabel sesuai dengan di database
-    protected $table = 'ras_hewan'; 
+    protected $table = 'ras_hewan';
     protected $primaryKey = 'idras_hewan';
     public $timestamps = false;
 
-    protected $fillable = [
-        'nama_ras',
-        'idjenis_hewan',
-    ];
+    protected $fillable = ['nama_ras', 'idjenis_hewan'];
 
     public function jenisHewan()
     {

@@ -14,7 +14,7 @@ class JenisHewan extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'nama_jenis',
+        'nama_jenis_hewan',
     ];
 
     public function ras()

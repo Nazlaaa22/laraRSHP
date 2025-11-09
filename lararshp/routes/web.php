@@ -86,7 +86,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 Route::prefix('admin')->name('admin.')->group(function () {
-    // 🔹 CRUD Ras Hewan
     Route::get('/ras', [RasHewanController::class, 'index'])->name('ras.index');
     Route::get('/ras/create', [RasHewanController::class, 'create'])->name('ras.create');
     Route::post('/ras', [RasHewanController::class, 'store'])->name('ras.store');

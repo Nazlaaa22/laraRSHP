@@ -5,13 +5,11 @@
 @section('content')
 <div class="container mt-5">
 
-    {{-- Judul Halaman --}}
     <div class="text-center mb-4">
         <h3 class="fw-bold text-primary">🧬 Daftar Ras Hewan</h3>
         <p class="text-muted">Menampilkan semua ras hewan dari sistem RSHP</p>
     </div>
 
-    {{-- Tombol Tambah --}}
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h5 class="fw-bold text-primary">Data Ras Hewan</h5>
         <a href="{{ route('admin.ras.create') }}" class="btn btn-success">
@@ -19,7 +17,6 @@
         </a>
     </div>
 
-    {{-- Pesan Sukses --}}
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
@@ -27,7 +24,6 @@
         </div>
     @endif
 
-    {{-- Tabel Data Ras --}}
     <div class="card shadow-sm border-0 rounded-3">
         <div class="card-body">
             <div class="table-responsive">
@@ -71,7 +67,6 @@
         </div>
     </div>
 
-    {{-- Tombol Kembali --}}
     <div class="text-center mt-4">
         <a href="/admin" class="btn btn-primary" 
            style="border-radius: 8px; font-weight: 600;">
