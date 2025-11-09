@@ -25,13 +25,13 @@
             <label>Harga</label>
             <input type="number" name="harga" class="form-control" required>
         </div>
-        <div class="mb-3">
-            <label>Status</label>
-            <select name="status" class="form-control">
-                <option value="Y">Aktif</option>
-                <option value="N">Tidak Aktif</option>
-            </select>
-        </div>
+            <div class="mb-3">
+                <label>Status</label>
+                <select name="status" class="form-control" required>
+                    <option value="1">Aktif</option>
+                    <option value="0">Tidak Aktif</option>
+                </select>
+            </div>
         <button type="submit" class="btn btn-success">Simpan</button>
         <a href="{{ route('barang.index') }}" class="btn btn-secondary">Kembali</a>
     </form>

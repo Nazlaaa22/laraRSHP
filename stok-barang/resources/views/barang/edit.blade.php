@@ -29,13 +29,13 @@
             <label>Harga</label>
             <input type="number" name="harga" class="form-control" value="{{ $barang->harga }}" required>
         </div>
-        <div class="mb-3">
-            <label>Status</label>
-            <select name="status" class="form-control">
-                <option value="Y" {{ $barang->status == 'Y' ? 'selected' : '' }}>Aktif</option>
-                <option value="N" {{ $barang->status == 'N' ? 'selected' : '' }}>Tidak Aktif</option>
-            </select>
-        </div>
+            <div class="mb-3">
+                <label>Status</label>
+                <select name="status" class="form-control" required>
+                    <option value="1" {{ $barang->status == 1 ? 'selected' : '' }}>Aktif</option>
+                    <option value="0" {{ $barang->status == 0 ? 'selected' : '' }}>Tidak Aktif</option>
+                </select>
+            </div>
         <button type="submit" class="btn btn-warning">Update</button>
         <a href="{{ route('barang.index') }}" class="btn btn-secondary">Kembali</a>
     </form>

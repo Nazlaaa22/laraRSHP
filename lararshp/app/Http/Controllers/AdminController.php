@@ -23,7 +23,7 @@ class AdminController extends Controller
     public function ras()
     {
         $data = DB::table('ras_hewan')->get();
-        return view('admin.ras', ['data' => $data]);
+        return view('admin.ras.index', ['data' => $data]);
     }
 
     // ✅ 3. Daftar Kategori

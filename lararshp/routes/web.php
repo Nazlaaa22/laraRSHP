@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 Auth::routes();
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\JenisHewanController;
+use App\Http\Controllers\Admin\RasHewanController;
 
 Route::middleware(['isAdministrator'])->group(function () {
     Route::get('/admin/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
@@ -78,10 +79,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/jenis', [JenisHewanController::class, 'index'])->name('jenis.index');
     Route::get('/jenis/create', [JenisHewanController::class, 'create'])->name('jenis.create');
     Route::post('/jenis', [JenisHewanController::class, 'store'])->name('jenis.store');
-    
-    // Tambahkan dua baris ini 👇
     Route::get('/jenis/{id}/edit', [JenisHewanController::class, 'edit'])->name('jenis.edit');
     Route::put('/jenis/{id}', [JenisHewanController::class, 'update'])->name('jenis.update');
     Route::delete('/jenis/{id}', [JenisHewanController::class, 'destroy'])->name('jenis.destroy');
+
 });
 
+Route::prefix('admin')->name('admin.')->group(function () {
+    // 🔹 CRUD Ras Hewan
+    Route::get('/ras', [RasHewanController::class, 'index'])->name('ras.index');
+    Route::get('/ras/create', [RasHewanController::class, 'create'])->name('ras.create');
+    Route::post('/ras', [RasHewanController::class, 'store'])->name('ras.store');
+    Route::get('/ras/{id}/edit', [RasHewanController::class, 'edit'])->name('ras.edit');
+    Route::put('/ras/{id}', [RasHewanController::class, 'update'])->name('ras.update');
+    Route::delete('/ras/{id}', [RasHewanController::class, 'destroy'])->name('ras.destroy');
+});
