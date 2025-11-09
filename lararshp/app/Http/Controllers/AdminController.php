@@ -30,7 +30,7 @@ class AdminController extends Controller
     public function kategori()
     {
         $data = DB::table('kategori')->get();
-        return view('admin.kategori', ['data' => $data]);
+        return view('admin.kategori.index', ['data' => $data]);
     }
 
     // ✅ 4. Daftar Kategori Klinis

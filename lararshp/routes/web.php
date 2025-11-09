@@ -8,6 +8,7 @@ Auth::routes();
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\JenisHewanController;
 use App\Http\Controllers\Admin\RasHewanController;
+use App\Http\Controllers\Admin\KategoriController;
 
 Route::middleware(['isAdministrator'])->group(function () {
     Route::get('/admin/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
@@ -93,3 +94,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('/ras/{id}', [RasHewanController::class, 'update'])->name('ras.update');
     Route::delete('/ras/{id}', [RasHewanController::class, 'destroy'])->name('ras.destroy');
 });
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('kategori', App\Http\Controllers\Admin\KategoriController::class);
+});
+
+
