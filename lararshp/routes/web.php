@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\JenisHewanController;
 use App\Http\Controllers\Admin\RasHewanController;
 use App\Http\Controllers\Admin\KategoriController;
+use App\Http\Controllers\Admin\KategoriKlinisController;
 
 Route::middleware(['isAdministrator'])->group(function () {
     Route::get('/admin/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
@@ -96,7 +97,20 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::resource('kategori', App\Http\Controllers\Admin\KategoriController::class);
+    Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
+    Route::get('/kategori/create', [KategoriController::class, 'create'])->name('kategori.create');
+    Route::post('/kategori', [KategoriController::class, 'store'])->name('kategori.store');
+    Route::get('/kategori/{id}/edit', [KategoriController::class, 'edit'])->name('kategori.edit');
+    Route::put('/kategori/{id}', [KategoriController::class, 'update'])->name('kategori.update');
+    Route::delete('/kategori/{id}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
 });
 
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/kategori-klinis', [KategoriKlinisController::class, 'index'])->name('kategori_klinis.index');
+    Route::get('/kategori-klinis/create', [KategoriKlinisController::class, 'create'])->name('kategori_klinis.create');
+    Route::post('/kategori-klinis', [KategoriKlinisController::class, 'store'])->name('kategori_klinis.store');
+    Route::get('/kategori-klinis/{id}/edit', [KategoriKlinisController::class, 'edit'])->name('kategori_klinis.edit');
+    Route::put('/kategori-klinis/{id}', [KategoriKlinisController::class, 'update'])->name('kategori_klinis.update');
+    Route::delete('/kategori-klinis/{id}', [KategoriKlinisController::class, 'destroy'])->name('kategori_klinis.destroy');
+});
 

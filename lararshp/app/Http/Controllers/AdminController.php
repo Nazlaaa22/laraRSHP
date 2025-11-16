@@ -37,7 +37,7 @@ class AdminController extends Controller
     public function kategoriKlinis()
     {
         $data = DB::table('kategori_klinis')->get();
-        return view('admin.kategori_klinis', ['data' => $data]);
+        return view('admin.kategori_klinis.index', ['data' => $data]);
     }
 
     // ✅ 5. Daftar Kode Tindakan Terapi
