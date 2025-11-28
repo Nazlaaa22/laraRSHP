@@ -1,58 +1,72 @@
-@extends('layouts.admin')
-@section('title', 'Data Jenis Hewan')
+@extends('layouts.lte.main')
 
 @section('content')
-<div class="text-center mb-4">
-    <h3 class="fw-bold" style="color: var(--primary)">🐾 Daftar Jenis Hewan</h3>
-    <p class="text-muted">Menampilkan semua jenis hewan yang terdaftar di sistem RSHP</p>
-</div>
-<div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="fw-bold text-primary">Data Jenis Hewan</h4>
-        <a href="{{ route('admin.jenis.create') }}" class="btn btn-success">+ Tambah Jenis Hewan</a>
+<div class="container-fluid">
+
+    {{-- Breadcrumb --}}
+    <div class="row mb-3">
+        <div class="col-sm-6">
+            <h3 class="mb-0">Jenis Hewan</h3>
+        </div>
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-end">
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Master Data</a></li>
+                <li class="breadcrumb-item active">Jenis Hewan</li>
+            </ol>
+        </div>
     </div>
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+    {{-- Card Tabel --}}
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Tabel Data Jenis Hewan</h5>
+            <a href="{{ route('admin.jenis.create') }}" class="btn btn-primary btn-sm">
+                + Tambah Jenis
+            </a>
+        </div>
 
-    <div class="card shadow-sm border-0">
-        <div class="card-body">
-            <table class="table table-hover align-middle text-center">
-                <thead class="table-primary">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Nama Jenis Hewan</th>
-                        <th>Aksi</th>
+                        <th class="text-center" width="50">No</th>
+                        <th>Nama</th>
+                        <th class="text-center" width="150">Aksi</th>
                     </tr>
                 </thead>
+
                 <tbody>
-                    @forelse($jenis as $index => $j)
-                    <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $j->nama_jenis_hewan }}</td>
-                        <td>
-                            <a href="{{ route('admin.jenis.edit', $j->idjenis_hewan) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('admin.jenis.destroy', $j->idjenis_hewan) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus data ini?')">Hapus</button>
-                            </form>
-                        </td>
-                    </tr>
+                    @forelse($jenis as $index => $item)
+                        <tr>
+                            <td class="text-center">{{ $index + 1 }}</td>
+                            <td>{{ $item->nama_jenis_hewan }}</td>
+                            <td class="text-center">
+                                <a href="{{ route('admin.jenis.edit', $item->idjenis_hewan) }}" 
+                                   class="btn btn-warning btn-sm">Edit</a>
+
+                                <form action="{{ route('admin.jenis.destroy', $item->idjenis_hewan) }}"
+                                      method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button onclick="return confirm('Yakin hapus data ini?')"
+                                            class="btn btn-danger btn-sm">
+                                        Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
                     @empty
-                    <tr>
-                        <td colspan="3" class="text-muted">Belum ada data jenis hewan.</td>
-                    </tr>
+                        <tr>
+                            <td colspan="3" class="text-center text-muted py-3">
+                                Tidak ada data jenis hewan.
+                            </td>
+                        </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
-    </div>
-</div>
 
-<a href="/admin" class="btn mt-4" 
-   style="background: var(--primary); color: white; border-radius: 8px; font-weight: 600;">
-   ← Kembali ke Dashboard
-</a>
+    </div>
+
+</div>
 @endsection

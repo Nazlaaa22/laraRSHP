@@ -10,6 +10,9 @@ use App\Http\Controllers\Admin\JenisHewanController;
 use App\Http\Controllers\Admin\RasHewanController;
 use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\KategoriKlinisController;
+use App\Http\Controllers\Admin\TindakanTerapiController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserController;
 
 Route::middleware(['isAdministrator'])->group(function () {
     Route::get('/admin/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
@@ -112,5 +115,37 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/kategori-klinis/{id}/edit', [KategoriKlinisController::class, 'edit'])->name('kategori_klinis.edit');
     Route::put('/kategori-klinis/{id}', [KategoriKlinisController::class, 'update'])->name('kategori_klinis.update');
     Route::delete('/kategori-klinis/{id}', [KategoriKlinisController::class, 'destroy'])->name('kategori_klinis.destroy');
+});
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('tindakan-terapi', TindakanTerapiController::class)->names('tindakan_terapi');
+});
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/pet', [App\Http\Controllers\Admin\PetController::class, 'index'])->name('pet.index');
+    Route::get('/pet/create', [App\Http\Controllers\Admin\PetController::class, 'create'])->name('pet.create');
+    Route::post('/pet', [App\Http\Controllers\Admin\PetController::class, 'store'])->name('pet.store');
+    Route::get('/pet/{id}/edit', [App\Http\Controllers\Admin\PetController::class, 'edit'])->name('pet.edit');
+    Route::put('/pet/{id}', [App\Http\Controllers\Admin\PetController::class, 'update'])->name('pet.update');
+    Route::delete('/pet/{id}', [App\Http\Controllers\Admin\PetController::class, 'destroy'])->name('pet.destroy');
+
+});
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/role', [RoleController::class, 'index'])->name('role.index');
+    Route::get('/role/create', [RoleController::class, 'create'])->name('role.create');
+    Route::post('/role', [RoleController::class, 'store'])->name('role.store');
+    Route::get('/role/{id}/edit', [RoleController::class, 'edit'])->name('role.edit');
+    Route::put('/role/{id}', [RoleController::class, 'update'])->name('role.update');
+    Route::delete('/role/{id}', [RoleController::class, 'destroy'])->name('role.destroy');
+});
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/user', [UserController::class, 'index'])->name('user.index');
+    Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
+    Route::post('/user', [UserController::class, 'store'])->name('user.store');
+    Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 });
 

@@ -1,36 +1,47 @@
-@extends('layouts.admin')
-@section('title', 'Daftar Jenis Hewan')
+@extends('layouts.lte.main')
 
 @section('content')
-<div class="text-center mb-4">
-    <h3 class="fw-bold" style="color: var(--primary)">🐾 Daftar Jenis Hewan</h3>
-    <p class="text-muted">Menampilkan semua jenis hewan yang terdaftar di sistem RSHP</p>
-</div>
 
-<div class="card shadow-sm border-0 rounded-4 p-3" style="background: var(--card-bg);">
-    <div class="table-responsive">
-        <table class="table align-middle table-hover">
-            <thead class="table-primary text-dark">
+<div class="container-fluid">
+
+    <h3 class="mb-3">Jenis Hewan</h3>
+
+    <div class="card">
+        <div class="card-header">
+            <a href="{{ route('admin.jenis.create') }}" class="btn btn-primary btn-sm">Tambah Jenis</a>
+        </div>
+
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead>
                 <tr>
-                    <th class="text-start ps-4" style="width: 80px;">ID</th>
-                    <th class="text-start">Nama Jenis Hewan</th>
+                    <th>#</th>
+                    <th>Nama</th>
+                    <th width="150px">Aksi</th>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach($data as $item)
-                <tr>
-                    <td class="text-start ps-4">{{ $item->idjenis_hewan }}</td>
-                    <td class="text-start">{{ $item->nama_jenis_hewan }}</td>
-                </tr>
+                </thead>
+
+                <tbody>
+                @foreach ($data as $index => $item)
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ $item->nama }}</td>
+                        <td>
+                            <a href="{{ route('admin.jenis.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                            <form action="{{ route('admin.jenis.destroy', $item->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button onclick="return confirm('Hapus data?')" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
                 @endforeach
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
+
     </div>
+
 </div>
 
-
-<a href="/admin" class="btn mt-4" 
-   style="background: var(--primary); color: white; border-radius: 8px; font-weight: 600;">
-   ← Kembali ke Dashboard
-</a>
 @endsection
