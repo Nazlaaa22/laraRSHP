@@ -15,6 +15,10 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PetController;
 
+// RESEPSIONIS
+use App\Http\Controllers\Resepsionis\DashboardResepsionisController;
+use App\Http\Controllers\Resepsionis\PendaftaranController;
+
 // =========================
 // HALAMAN PUBLIC
 // =========================
@@ -51,10 +55,8 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
 // RESEPSIONIS
 // =========================
 Route::middleware('resepsionis')->prefix('resepsionis')->name('resepsionis.')->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\Resepsionis\DashboardResepsionisController::class, 'index'])
-        ->name('dashboard');
+    Route::get('/dashboard', [DashboardResepsionisController::class, 'index'])->name('dashboard');
 });
-
 
 // =========================
 // DOKTER
@@ -79,6 +81,7 @@ Route::middleware('pemilik')->prefix('pemilik')->name('pemilik.')->group(functio
     Route::get('/dashboard', [App\Http\Controllers\Pemilik\DashboardPemilikController::class, 'index'])
         ->name('dashboard');
 });
+
 
 
 
@@ -177,4 +180,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
     Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 });
+
+// RESEPSIONIS 
+
+    // CRUD Pemilik
+    Route::resource('pemilik', App\Http\Controllers\Resepsionis\PemilikController::class);
+
+    // CRUD Pet
+    Route::resource('pet', App\Http\Controllers\Resepsionis\PetController::class);
+
+    // CRUD Pendaftaran (Temu Dokter)
+    Route::resource('pendaftaran', App\Http\Controllers\Resepsionis\PendaftaranController::class);
 

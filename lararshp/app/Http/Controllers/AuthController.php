@@ -31,23 +31,32 @@ class AuthController extends Controller
             return back()->withErrors(['loginError' => 'User tidak memiliki role aktif!']);
         }
 
-        $roleName = $role->nama_role;
+        // Ambil role dari database
+        $roleName = strtolower($role->nama_role);
 
+        // Simpan ke session (VERSI FIX)
         session([
             'iduser' => $user->iduser,
             'email' => $user->email,
             'nama' => $user->nama,
-            'role' => $roleName,
+            'role' => $roleName, // <- FIX TERPENTING
         ]);
 
-        return match ($roleName) {
-            'Administrator' => redirect('/admin/dashboard'),
-            'resepsionis'   => redirect('/resepsionis/dashboard'),
-            'dokter'        => redirect('/dokter/dashboard'),
-            'perawat'       => redirect('/perawat/dashboard'),
-            'pemilik'       => redirect('/pemilik/dashboard'),
-            default         => back()->withErrors(['loginError' => 'Role tidak dikenali'])
-        };
+        // Redirect berdasarkan role
+        switch ($roleName) {
+            case 'administrator':
+                return redirect('/admin/dashboard');
+            case 'resepsionis':
+                return redirect('/resepsionis/dashboard');
+            case 'dokter':
+                return redirect('/dokter/dashboard');
+            case 'perawat':
+                return redirect('/perawat/dashboard');
+            case 'pemilik':
+                return redirect('/pemilik/dashboard');
+            default:
+                return back()->withErrors(['loginError' => 'Role tidak dikenali!']);
+        }
     }
 
     public function logout()

@@ -11,11 +11,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-
-        // === REGISTER ALIAS MIDDLEWARE YANG BENAR ===
         $middleware->alias([
             'admin'       => App\Http\Middleware\isAdministrator::class,
-            'Resepsionis' => App\Http\Middleware\isResepsionis::class,
+            'resepsionis' => App\Http\Middleware\isResepsionis::class,
             'dokter'      => App\Http\Middleware\isDokter::class,
             'perawat'     => App\Http\Middleware\isPerawat::class,
             'pemilik'     => App\Http\Middleware\isPemilik::class,

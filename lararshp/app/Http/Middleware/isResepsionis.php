@@ -7,12 +7,13 @@ use Illuminate\Http\Request;
 
 class isResepsionis
 {
-    public function handle(Request $request, Closure $next)
+    public function handle($request, Closure $next)
     {
-        if (session('role') !== 'resepsionis') {
+        if (session('role') !== 'resepsionis' && session('role') !== 'Resepsionis') {
             return redirect('/login')->withErrors(['loginError' => 'Akses ditolak!']);
         }
 
         return $next($request);
     }
 }
+

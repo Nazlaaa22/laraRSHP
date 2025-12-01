@@ -21,7 +21,7 @@
 
     <a href="/resepsionis/dokter" class="menu-card text-decoration-none">
         <div class="menu-icon fs-2">👨‍⚕️</div>
-        <h5>Data Dokter</h5>
+        <h5>Temu Dokter</h5>
     </a>
 
     <a href="/resepsionis/riwayat" class="menu-card text-decoration-none">

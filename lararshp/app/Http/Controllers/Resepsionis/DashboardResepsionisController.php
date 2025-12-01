@@ -9,8 +9,7 @@ class DashboardResepsionisController extends Controller
 {
     public function index()
     {
-        // Sesuaikan modelnya
-        $pendaftaran = TemuDokter::with(['pet.pemilik.user'])->get();
+        $pendaftaran = TemuDokter::orderBy('idreservasi_dokter', 'DESC')->get();
 
         return view('resepsionis.dashboard', compact('pendaftaran'));
     }

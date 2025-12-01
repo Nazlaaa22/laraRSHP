@@ -10,21 +10,9 @@ class Pet extends Model
     protected $primaryKey = 'idpet';
     public $timestamps = false;
 
-    protected $fillable = [
-        'nama_pet',
-        'jenis_kelamin',
-        'idjenis_hewan',
-        'idras_hewan',
-        'umur'
-    ];
+    protected $fillable = ['nama','jenis','ras','idpemilik'];
 
-    public function jenisHewan()
-    {
-        return $this->belongsTo(JenisHewan::class, 'idjenis_hewan');
-    }
-
-    public function rasHewan()
-    {
-        return $this->belongsTo(RasHewan::class, 'idras_hewan');
+    public function pemilik(){
+        return $this->belongsTo(Pemilik::class,'idpemilik','idpemilik');
     }
 }
