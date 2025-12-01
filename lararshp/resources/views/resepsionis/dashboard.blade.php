@@ -4,7 +4,7 @@
 @section('content')
 <div class="text-center">
     <h3 class="fw-bold" style="color: var(--primary)">Dashboard Resepsionis RSHP</h3>
-    <p class="text-muted">Selamat datang, {{ session('user_name') }} 👋</p>
+    <p class="text-muted">Selamat datang, {{ session('nama') }} 👋</p>
 </div>
 
 {{-- MENU GRID --}}

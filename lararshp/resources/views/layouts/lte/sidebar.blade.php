@@ -71,7 +71,7 @@
                       <li class="nav-item">
                           <a href="{{ route('admin.tindakan_terapi.index') }}" class="nav-link">
                               <i class="nav-icon bi bi-circle"></i>
-                              <p>Kode Tindakan Terapi</p>
+                              <p>Tindakan Terapi</p>
                           </a>
                       </li>
 

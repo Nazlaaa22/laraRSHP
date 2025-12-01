@@ -15,16 +15,4 @@ class RoleUser extends Model
         'idrole',
         'status'
     ];
-
-    // Relasi ke Role
-    public function role()
-    {
-        return $this->belongsTo(Role::class, 'idrole', 'idrole');
-    }
-
-    // Relasi ke User
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'iduser', 'iduser');
-    }
 }

@@ -9,7 +9,7 @@ class AdminController extends Controller
     // ✅ Halaman dashboard utama (menu 8 tabel)
     public function index()
     {
-        return view('admin.dashboard');
+        return redirect()->route('admin.dashboard');
     }
 
     // ✅ 1. Daftar Jenis Hewan

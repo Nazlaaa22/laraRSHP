@@ -156,7 +156,7 @@
     <nav>
         <div class="logo">RSHP</div>
         <ul>
-            <li><a href="/">Home</a></li>
+            <li><a href="/home">Home</a></li>
             <li><a href="{{ route('site.layanan') }}">Layanan</a></li>
             <li><a href="{{ route('site.kontak') }}">Kontak</a></li>
             <li><a href="{{ route('site.struktur') }}">Struktur Organisasi</a></li>

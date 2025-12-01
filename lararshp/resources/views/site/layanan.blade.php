@@ -104,7 +104,7 @@
     <nav>
         <div class="logo">RSHP</div>
         <ul>
-            <li><a href="/">Home</a></li>
+            <li><a href="/home">Home</a></li>
             <li><a href="/layanan">Layanan</a></li>
             <li><a href="/kontak">Kontak</a></li>
             <li><a href="/struktur">Struktur Organisasi</a></li>

@@ -5,62 +5,70 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\TindakanTerapi;
+use App\Models\Kategori;
+use App\Models\KategoriKlinis;
 
 class TindakanTerapiController extends Controller
 {
     public function index()
     {
-        $tindakan = TindakanTerapi::all();
+        $tindakan = TindakanTerapi::with(['kategori', 'kategoriKlinis'])->get();
         return view('admin.tindakan_terapi.index', compact('tindakan'));
     }
 
     public function create()
     {
-        return view('admin.tindakan_terapi.create');
+        $kategori = Kategori::all();
+        $kategoriKlinis = KategoriKlinis::all();
+
+        return view('admin.tindakan_terapi.create', compact('kategori', 'kategoriKlinis'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'nama_tindakan' => 'required|string|max:150|unique:tindakan_terapi,nama_tindakan',
-            'deskripsi' => 'nullable|string|max:255',
-            'harga' => 'required|numeric|min:0',
+            'kode' => 'required|string|max:10',
+            'deskripsi_tindakan_terapi' => 'nullable|string|max:1000',
+            'idkategori' => 'required|integer',
+            'idkategori_klinis' => 'required|integer',
         ]);
 
-        TindakanTerapi::create([
-            'nama_tindakan' => $request->nama_tindakan,
-            'deskripsi' => $request->deskripsi,
-            'harga' => $request->harga,
-        ]);
+        TindakanTerapi::create($request->all());
 
         return redirect()->route('admin.tindakan_terapi.index')
-                         ->with('success', 'Tindakan Terapi berhasil ditambahkan!');
+            ->with('success', 'Tindakan Terapi berhasil ditambahkan!');
     }
+
 
     public function edit($id)
     {
         $tindakan = TindakanTerapi::findOrFail($id);
-        return view('admin.tindakan_terapi.edit', compact('tindakan'));
+        $kategori = Kategori::all();
+        $kategoriKlinis = KategoriKlinis::all();
+
+        return view('admin.tindakan_terapi.edit', compact('tindakan', 'kategori', 'kategoriKlinis'));
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'nama_tindakan' => 'required|string|max:150',
-            'deskripsi' => 'nullable|string|max:255',
-            'harga' => 'required|numeric|min:0',
-        ]);
-
         $tindakan = TindakanTerapi::findOrFail($id);
 
+        $request->validate([
+            'kode' => 'required|string|max:10|unique:kode_tindakan_terapi,kode,' . $id . ',idkode_tindakan_terapi',
+            'deskripsi_tindakan_terapi' => 'nullable|string|max:255',
+            'idkategori' => 'required|integer',
+            'idkategori_klinis' => 'required|integer',
+        ]);
+
         $tindakan->update([
-            'nama_tindakan' => $request->nama_tindakan,
-            'deskripsi' => $request->deskripsi,
-            'harga' => $request->harga,
+            'kode' => $request->kode,
+            'deskripsi_tindakan_terapi' => $request->deskripsi_tindakan_terapi,
+            'idkategori' => $request->idkategori,
+            'idkategori_klinis' => $request->idkategori_klinis,
         ]);
 
         return redirect()->route('admin.tindakan_terapi.index')
-                         ->with('success', 'Tindakan Terapi berhasil diperbarui!');
+                         ->with('success', 'Tindakan terapi berhasil diperbarui!');
     }
 
     public function destroy($id)
@@ -69,6 +77,6 @@ class TindakanTerapiController extends Controller
         $tindakan->delete();
 
         return redirect()->route('admin.tindakan_terapi.index')
-                         ->with('success', 'Tindakan Terapi berhasil dihapus!');
+                         ->with('success', 'Tindakan terapi berhasil dihapus!');
     }
 }

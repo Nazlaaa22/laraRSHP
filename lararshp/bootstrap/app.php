@@ -11,20 +11,17 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-    $middleware->alias([
-        'isAdministrator' => App\Http\Middleware\isAdministrator::class,
-        'isResepsionis' => App\Http\Middleware\isResepsionis::class,
-        'isDokter' => App\Http\Middleware\isDokter::class,
-        'isPerawat' => App\Http\Middleware\isPerawat::class,
-        'isPemilik' => App\Http\Middleware\isPemilik::class,
-    ]);
-    })
 
-    ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // === REGISTER ALIAS MIDDLEWARE YANG BENAR ===
+        $middleware->alias([
+            'admin'       => App\Http\Middleware\isAdministrator::class,
+            'Resepsionis' => App\Http\Middleware\isResepsionis::class,
+            'dokter'      => App\Http\Middleware\isDokter::class,
+            'perawat'     => App\Http\Middleware\isPerawat::class,
+            'pemilik'     => App\Http\Middleware\isPemilik::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
-    })->create();
-
-
+    })
+    ->create();

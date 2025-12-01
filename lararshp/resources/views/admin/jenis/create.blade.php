@@ -11,7 +11,7 @@
             </div>
             <div class="col-sm-6 text-end">
                 <ol class="breadcrumb float-sm-end">
-                    <li class="breadcrumb-item"><a href="#">Master Data</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Master Data</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('admin.jenis.index') }}">Jenis Hewan</a></li>
                     <li class="breadcrumb-item active">Tambah</li>
                 </ol>

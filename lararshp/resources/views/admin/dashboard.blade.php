@@ -1,154 +1,125 @@
 @extends('layouts.lte.main')
 
 @section('content')
+<div class="app-content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h3 class="app-content-headerText">Dashboard</h3>
+            </div>
+            <div class="col-sm-6 d-flex justify-content-end">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
+
+    {{-- 1. JENIS HEWAN --}}
     <div class="col-lg-3 col-6">
         <div class="small-box text-bg-primary">
             <div class="inner">
-                <h3>150</h3>
-                <p>New Orders</p>
+                <h3>{{ $totalJenis }}</h3>
+                <p>Jenis Hewan</p>
             </div>
-            <svg class="small-box-icon" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M2.25 2.25a.75.75 0 000 1.5h1.386c.17 0 .318.114.362.278l2.558 
-                9.592a3.752 3.752 0 00-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 
-                000-1.5H5.378A2.25 2.25 0 017.5 15h11.218a.75.75 0 
-                00.674-.421 60.358 60.358 0 002.96-7.228.75.75 0 
-                00-.525-.965A60.864 60.864 0 005.68 4.509l-.232-.867A1.875 1.875 0 
-                003.636 2.25H2.25zM3.75 20.25a1.5 1.5 0 113 0 1.5 
-                1.5 0 01-3 0zM16.5 20.25a1.5 1.5 0 113 0 1.5 1.5 
-                0 01-3 0z"></path>
-            </svg>
-            <a href="#" class="small-box-footer">More info <i class="bi bi-link-45deg"></i></a>
+            <svg class="small-box-icon" fill="currentColor" viewBox="0 0 24 24">...</svg>
+            <a href="{{ route('admin.jenis.index') }}" class="small-box-footer">More info <i class="bi bi-link-45deg"></i></a>
         </div>
     </div>
 
+    {{-- 2. RAS HEWAN --}}
     <div class="col-lg-3 col-6">
         <div class="small-box text-bg-success">
             <div class="inner">
-                <h3>53<sup class="fs-5">%</sup></h3>
-                <p>Bounce Rate</p>
+                <h3>{{ $totalRas }}</h3>
+                <p>Ras Hewan</p>
             </div>
-            <svg class="small-box-icon" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M18.375 2.25c-1.035 0-1.875.84-1.875 
-                1.875v15.75c0 1.035.84 1.875 1.875 
-                1.875h.75c1.035 0 1.875-.84 
-                1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75zM9.75 
-                8.625c0-1.036.84-1.875 
-                1.875-1.875h.75c1.036 0 1.875.84 
-                1.875 1.875v11.25c0 1.035-.84 1.875-1.875 
-                1.875h-.75a1.875 1.875 0 
-                01-1.875-1.875V8.625zM3 13.125c0-1.036.84-1.875 
-                1.875-1.875h.75c1.036 0 1.875.84 
-                1.875 1.875v6.75c0 1.035-.84 
-                1.875-1.875 1.875h-.75A1.875 1.875 0 
-                013 19.875v-6.75z"></path>
-            </svg>
-            <a href="#" class="small-box-footer">More info <i class="bi bi-link-45deg"></i></a>
+            <svg class="small-box-icon" fill="currentColor" viewBox="0 0 24 24">...</svg>
+            <a href="{{ route('admin.ras.index') }}" class="small-box-footer">More info <i class="bi bi-link-45deg"></i></a>
         </div>
     </div>
 
+    {{-- 3. KATEGORI --}}
     <div class="col-lg-3 col-6">
         <div class="small-box text-bg-warning">
             <div class="inner">
-                <h3>44</h3>
-                <p>User Registrations</p>
+                <h3>{{ $totalKategori }}</h3>
+                <p>Kategori</p>
             </div>
-            <svg class="small-box-icon" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M6.25 6.375a4.125 4.125 0 
-                118.25 0 4.125 4.125 0 
-                01-8.25 0zM3.25 19.125a7.125 7.125 
-                0 0114.25 0v.003l-.001.119a.75.75 0 
-                01-.363.63 13.067 13.067 0 
-                01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 
-                0 01-.364-.63l-.001-.122zM19.75 
-                7.5a.75.75 0 00-1.5 0v2.25H16a.75.75 
-                0 000 1.5h2.25v2.25a.75.75 
-                0 001.5 0v-2.25H22a.75.75 0 
-                000-1.5h-2.25V7.5z"></path>
-            </svg>
-            <a href="#" class="small-box-footer">More info <i class="bi bi-link-45deg"></i></a>
+            <svg class="small-box-icon" fill="currentColor" viewBox="0 0 24 24">...</svg>
+            <a href="{{ route('admin.kategori.index') }}" class="small-box-footer">More info <i class="bi bi-link-45deg"></i></a>
         </div>
     </div>
 
+    {{-- 4. KATEGORI KLINIS --}}
     <div class="col-lg-3 col-6">
         <div class="small-box text-bg-danger">
             <div class="inner">
-                <h3>65</h3>
-                <p>Unique Visitors</p>
+                <h3>{{ $totalKategoriKlinis }}</h3>
+                <p>Kategori Klinis</p>
             </div>
-            <svg class="small-box-icon" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M2.25 13.5a8.25 8.25 0 
-                018.25-8.25.75.75 0 
-                01.75.75v6.75H18a.75.75 0 
-                01.75.75 8.25 8.25 0 
-                01-16.5 0z"></path>
-            </svg>
-            <a href="#" class="small-box-footer">More info <i class="bi bi-link-45deg"></i></a>
+            <svg class="small-box-icon" fill="currentColor" viewBox="0 0 24 24">...</svg>
+            <a href="{{ route('admin.kategori_klinis.index') }}" class="small-box-footer">More info <i class="bi bi-link-45deg"></i></a>
         </div>
     </div>
+
 </div>
 
-<div class="row">
-    <div class="col-lg-7 connectedSortable">
-        <div class="card mb-4">
-            <div class="card-header"><h3 class="card-title">Sales Value</h3></div>
-            <div class="card-body">
-                <div id="revenue-chart"></div>
+
+<div class="row mt-3">
+
+    {{-- 5. TINDAKAN TERAPI --}}
+    <div class="col-lg-3 col-6">
+        <div class="small-box text-bg-info">
+            <div class="inner">
+                <h3>{{ $totalTindakan }}</h3>
+                <p>Tindakan Terapi</p>
             </div>
+            <svg class="small-box-icon" fill="currentColor" viewBox="0 0 24 24">...</svg>
+            <a href="{{ route('admin.tindakan_terapi.index') }}" class="small-box-footer">More info <i class="bi bi-link-45deg"></i></a>
         </div>
     </div>
 
-    <div class="col-lg-5 connectedSortable">
-        <div class="card text-white bg-primary bg-gradient border-primary mb-4">
-            <div class="card-header border-0">
-                <h3 class="card-title">Sales Value</h3>
+    {{-- 6. PET --}}
+    <div class="col-lg-3 col-6">
+        <div class="small-box text-bg-secondary">
+            <div class="inner">
+                <h3>{{ $totalPet }}</h3>
+                <p>Pet</p>
             </div>
-            <div class="card-body">
-                <div id="world-map" style="height: 220px"></div>
-            </div>
+            <svg class="small-box-icon" fill="currentColor" viewBox="0 0 24 24">...</svg>
+            <a href="{{ route('admin.pet.index') }}" class="small-box-footer">More info <i class="bi bi-link-45deg"></i></a>
         </div>
     </div>
+
+    {{-- 7. ROLE --}}
+    <div class="col-lg-3 col-6">
+        <div class="small-box text-bg-primary">
+            <div class="inner">
+                <h3>{{ $totalRole }}</h3>
+                <p>Role</p>
+            </div>
+            <svg class="small-box-icon" fill="currentColor" viewBox="0 0 24 24">...</svg>
+            <a href="{{ route('admin.role.index') }}" class="small-box-footer">More info <i class="bi bi-link-45deg"></i></a>
+        </div>
+    </div>
+
+    {{-- 8. USER --}}
+    <div class="col-lg-3 col-6">
+        <div class="small-box text-bg-dark">
+            <div class="inner">
+                <h3>{{ $totalUser }}</h3>
+                <p>User</p>
+            </div>
+            <svg class="small-box-icon" fill="currentColor" viewBox="0 0 24 24">...</svg>
+            <a href="{{ route('admin.user.index') }}" class="small-box-footer">More info <i class="bi bi-link-45deg"></i></a>
+        </div>
+    </div>
+
 </div>
 @endsection
 
-@push('scripts')
-    <!-- ApexCharts -->
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js"></script>
-
-    <!-- jsVectorMap -->
-    <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js"></script>
-
-    <script>
-        // ========= SALES VALUE CHART ==========
-        const sales_chart_options = {
-            series: [
-                { name: 'Digital Goods', data: [28, 48, 40, 19, 86, 27, 90] },
-                { name: 'Electronics', data: [65, 59, 80, 81, 56, 55, 40] }
-            ],
-            chart: { height: 300, type: 'area', toolbar: { show: false } },
-            dataLabels: { enabled: false },
-            stroke: { curve: 'smooth' },
-            xaxis: {
-                type: 'datetime',
-                categories: [
-                    '2023-01-01', '2023-02-01', '2023-03-01',
-                    '2023-04-01', '2023-05-01', '2023-06-01', '2023-07-01'
-                ]
-            }
-        };
-
-        const chart1 = new ApexCharts(
-            document.querySelector("#revenue-chart"),
-            sales_chart_options
-        );
-        chart1.render();
-
-
-        // ========= WORLD MAP ==========
-        new jsVectorMap({
-            selector: "#world-map",
-            map: "world",
-        });
-    </script>
-@endpush

@@ -34,19 +34,10 @@
             margin: 0;
         }
 
-        nav ul li {
-            cursor: pointer;
-            transition: color 0.3s;
-            font-weight: 500;
-        }
-
-        nav ul li:hover {
-            color: #ffc107;
-        }
-
         nav ul li a {
             text-decoration: none;
             color: white;
+            font-weight: 500;
             transition: color 0.3s;
         }
 
@@ -61,7 +52,9 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            background-image: url("/images/rshp.jpg");
+
+            /* ✔ FIX: gunakan asset() agar gambar tampil */
+            background-image: url("{{ asset('images/rshp.jpg') }}");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -93,7 +86,7 @@
             line-height: 1.6;
             color: #f0f0f0;
             max-width: 800px;
-            margin: 0 auto; 
+            margin: 0 auto;
         }
 
         .btn-layanan {
@@ -168,12 +161,15 @@
 
     <nav>
         <div class="logo">RSHP</div>
+
         <ul>
-            <li>Home</li>
+            <!-- ✔ FIX: home harus link -->
+            <li><a href="{{ route('site.home') }}">Home</a></li>
+
             <li><a href="{{ route('site.layanan') }}">Layanan</a></li>
             <li><a href="{{ route('site.kontak') }}">Kontak</a></li>
             <li><a href="{{ route('site.struktur') }}">Struktur Organisasi</a></li>
-            <li><a href="/login" style="text-decoration:none; color:white;">Login</a></li>
+            <li><a href="/login" style="color:white;">Login</a></li>
         </ul>
     </nav>
 
