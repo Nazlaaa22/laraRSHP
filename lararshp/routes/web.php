@@ -18,6 +18,13 @@ use App\Http\Controllers\Admin\PetController;
 // RESEPSIONIS
 use App\Http\Controllers\Resepsionis\DashboardResepsionisController;
 use App\Http\Controllers\Resepsionis\PendaftaranController;
+use App\Http\Controllers\Resepsionis\PetResepsionisController;
+use App\Http\Controllers\Resepsionis\TemuDokterController;
+
+//PERAWAT
+use App\Http\Controllers\Perawat\DashboardPerawatController;
+use App\Http\Controllers\Perawat\PasienPerawatController;
+
 
 // =========================
 // HALAMAN PUBLIC
@@ -56,31 +63,42 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
 // =========================
 Route::middleware('resepsionis')->prefix('resepsionis')->name('resepsionis.')->group(function () {
     Route::get('/dashboard', [DashboardResepsionisController::class, 'index'])->name('dashboard');
+    Route::resource('pendaftaran', PendaftaranController::class);
+    Route::resource('pet', PetResepsionisController::class);
+    Route::get('/get-ras/{idjenis}', [PetResepsionisController::class, 'getRas'])->name('getRas');
+
 });
+
 
 // =========================
 // DOKTER
 // =========================
 Route::middleware('dokter')->prefix('dokter')->name('dokter.')->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\Dokter\DashboardDokterController::class, 'index'])
-        ->name('dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\Dokter\DashboardDokterController::class, 'index'])->name('dashboard');
 });
 
 // =========================
 // PERAWAT
 // =========================
-Route::middleware('perawat')->prefix('perawat')->name('perawat.')->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\Perawat\DashboardPerawatController::class, 'index'])
-        ->name('dashboard');
+Route::middleware(['web','perawat'])->prefix('perawat')->name('perawat.')->group(function () {
+    Route::get('/dashboard', [DashboardPerawatController::class, 'index'])->name('dashboard');
+    Route::get('/pasien', [PasienPerawatController::class, 'index'])->name('pasien');
+    Route::get('/pasien/{id}/detail', [PasienPerawatController::class, 'detail'])->name('pasien.detail');
+    Route::get('/perawat/pasien/{id}', [PasienPerawatController::class, 'detail'])->name('perawat.pasien.detail')->middleware('perawat');
+    Route::get('/pasien/{id}/detail', [PasienPerawatController::class,'detail'])->name('pasien.detail');
+    Route::post('/pasien/{id}/rekam-medis', [PasienPerawatController::class,'storeRekamMedis'])->name('rekam.store');
+
 });
+
 
 // =========================
 // PEMILIK
 // =========================
 Route::middleware('pemilik')->prefix('pemilik')->name('pemilik.')->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\Pemilik\DashboardPemilikController::class, 'index'])
-        ->name('dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\Pemilik\DashboardPemilikController::class, 'index'])->name('dashboard');
+
 });
+
 
 
 
@@ -182,13 +200,24 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 // RESEPSIONIS 
+Route::get('/dashboard', [DashboardResepsionisController::class, 'index'])->name('dashboard');
+    
 
-    // CRUD Pemilik
     Route::resource('pemilik', App\Http\Controllers\Resepsionis\PemilikController::class);
+    Route::get('/resepsionis/dashboard', [DashboardResepsionisController::class, 'index'])->name('resepsionis.dashboard');
 
-    // CRUD Pet
-    Route::resource('pet', App\Http\Controllers\Resepsionis\PetController::class);
 
     // CRUD Pendaftaran (Temu Dokter)
-    Route::resource('pendaftaran', App\Http\Controllers\Resepsionis\PendaftaranController::class);
+    Route::get('/pendaftaran', [PendaftaranController::class, 'index'])->name('pendaftaran');
+    Route::get('/pendaftaran/create', [PendaftaranController::class, 'create'])->name('pendaftaran.create');
+    Route::post('/pendaftaran/store', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
+
+Route::prefix('resepsionis')->middleware('resepsionis')->group(function () {
+
+    Route::get('/temu-dokter', [TemuDokterController::class, 'index'])->name('resepsionis.temu.index');
+    Route::get('/temu-dokter/{id}/edit', [TemuDokterController::class, 'edit'])->name('resepsionis.temu.edit');
+    Route::put('/temu-dokter/{id}', [TemuDokterController::class, 'update'])->name('resepsionis.temu.update');
+    Route::delete('/temu-dokter/{id}', [TemuDokterController::class, 'destroy'])->name('resepsionis.temu.destroy');
+});
+
 

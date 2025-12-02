@@ -13,4 +13,5 @@ class DashboardResepsionisController extends Controller
 
         return view('resepsionis.dashboard', compact('pendaftaran'));
     }
+    
 }

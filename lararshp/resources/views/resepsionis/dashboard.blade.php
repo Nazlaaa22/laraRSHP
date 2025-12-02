@@ -19,14 +19,9 @@
         <h5>Data Hewan</h5>
     </a>
 
-    <a href="/resepsionis/dokter" class="menu-card text-decoration-none">
+    <a href="{{ route('resepsionis.temu.index') }}" class="menu-card text-decoration-none">
         <div class="menu-icon fs-2">👨‍⚕️</div>
         <h5>Temu Dokter</h5>
-    </a>
-
-    <a href="/resepsionis/riwayat" class="menu-card text-decoration-none">
-        <div class="menu-icon fs-2">🧾</div>
-        <h5>Riwayat Pemeriksaan</h5>
     </a>
 </div>
 
@@ -48,10 +43,21 @@
             <tbody>
                 @forelse($pendaftaran as $p)
                 <tr>
-                    <td>{{ $p->idtemu_dokter }}</td>
+                    {{-- ID Pendaftaran --}}
+                    <td>{{ $p->idreservasi_dokter }}</td>
+
+                    {{-- Nama Hewan --}}
                     <td>{{ $p->pet->nama ?? '-' }}</td>
+
+                    {{-- Nama Pemilik --}}
                     <td>{{ $p->pet->pemilik->user->nama ?? '-' }}</td>
-                    <td>{{ $p->tanggal ?? '-' }}</td>
+
+                    {{-- Tanggal Daftar --}}
+                    <td>
+                        {{ $p->waktu_daftar ? date('Y-m-d H:i:s', strtotime($p->waktu_daftar)) : '-' }}
+                    </td>
+
+                    {{-- Status --}}
                     <td>
                         @if($p->status == 1)
                             <span class="badge bg-success">Selesai</span>

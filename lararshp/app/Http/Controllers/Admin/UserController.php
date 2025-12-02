@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\RoleUser;
+use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -17,7 +19,9 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('admin.user.create');
+        // Kirim data role untuk dropdown pemilihan role (Admin, Resepsionis, Dokter, dsb)
+        $roles = Role::all();
+        return view('admin.user.create', compact('roles'));
     }
 
     public function store(Request $request)
@@ -26,12 +30,21 @@ class UserController extends Controller
             'nama' => 'required|string|max:200',
             'email' => 'required|email|unique:user,email',
             'password' => 'required|min:6',
+            'idrole' => 'required'
         ]);
 
-        User::create([
+        // Insert ke tabel user
+        $user = User::create([
             'nama' => $request->nama,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+        ]);
+
+        // Insert ke tabel role_user
+        RoleUser::create([
+            'iduser' => $user->iduser,
+            'idrole' => $request->idrole,
+            'status' => 1,
         ]);
 
         return redirect()->route('admin.user.index')
@@ -41,7 +54,8 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        return view('admin.user.edit', compact('user'));
+        $roles = Role::all();
+        return view('admin.user.edit', compact('user', 'roles'));
     }
 
     public function update(Request $request, $id)
@@ -64,6 +78,12 @@ class UserController extends Controller
 
         $user->update($data);
 
+        if ($request->idrole) {
+            RoleUser::where('iduser', $id)->update([
+                'idrole' => $request->idrole,
+            ]);
+        }
+
         return redirect()->route('admin.user.index')
                          ->with('success', 'User berhasil diperbarui!');
     }
@@ -71,7 +91,6 @@ class UserController extends Controller
     public function destroy($id)
     {
         User::destroy($id);
-
         return redirect()->route('admin.user.index')
                          ->with('success', 'User berhasil dihapus!');
     }

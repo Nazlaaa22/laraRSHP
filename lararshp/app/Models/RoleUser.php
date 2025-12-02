@@ -10,9 +10,10 @@ class RoleUser extends Model
     protected $primaryKey = 'idrole_user';
     public $timestamps = false;
 
-    protected $fillable = [
-        'iduser',
-        'idrole',
-        'status'
-    ];
+    protected $fillable = ['iduser', 'idrole', 'status'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'iduser', 'iduser');
+    }
 }

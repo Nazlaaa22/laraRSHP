@@ -77,5 +77,7 @@
             btn.textContent = dark ? "🌙 Dark" : "🌞 Light";
         });
     </script>
+
+    @stack('scripts')
 </body>
 </html>

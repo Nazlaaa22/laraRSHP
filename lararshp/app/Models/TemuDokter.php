@@ -7,14 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class TemuDokter extends Model
 {
     protected $table = 'temu_dokter';
-    protected $primaryKey = 'idtemu_dokter';
+    protected $primaryKey = 'idreservasi_dokter';
     public $timestamps = false;
 
     protected $fillable = [
         'idpet',
-        'iddokter',
-        'tanggal',
-        'keluhan',
+        'idrole_user',
+        'no_urut',
         'status'
     ];
 
@@ -25,6 +24,13 @@ class TemuDokter extends Model
 
     public function dokter()
     {
-        return $this->belongsTo(Dokter::class, 'iddokter', 'iddokter');
+        return $this->belongsTo(RoleUser::class, 'idrole_user', 'idrole_user');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'iduser', 'iduser');
+    }
+
 }
+

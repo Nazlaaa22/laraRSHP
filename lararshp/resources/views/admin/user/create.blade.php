@@ -18,6 +18,16 @@
 <div class="card shadow-sm border-0">
     <div class="card-body">
 
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form action="{{ route('admin.user.store') }}" method="POST">
             @csrf
 
@@ -34,6 +44,16 @@
             <div class="mb-3">
                 <label class="form-label fw-bold">Password</label>
                 <input type="password" name="password" class="form-control" placeholder="Masukkan password" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Role</label>
+                <select name="idrole" class="form-select" required>
+                    <option value="">-- Pilih Role --</option>
+                    @foreach ($roles as $role)
+                        <option value="{{ $role->idrole }}">{{ $role->nama_role }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="d-flex justify-content-end gap-2">
