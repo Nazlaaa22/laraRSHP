@@ -51,13 +51,14 @@
 
     {{-- SIDEBAR --}}
     <div class="sidebar">
-        <h4 class="fw-bold mb-4">🐾 VetCare</h4>
+        <h4 class="fw-bold mb-4">🐾 RSHP</h4>
         <p class="profile-name">Dashboard Perawat<br>{{ session('nama') }}</p>
         <hr>
 
         <a href="{{ route('perawat.dashboard') }}" class="active">🏠 Beranda</a>
         <a href="{{ route('perawat.pasien') }}">🐕 Data Pasien</a>
-        <a href="#">👤 Profil Saya</a>
+        <a href="{{ route('perawat.profil') }}" class="{{ request()->routeIs('perawat.profil') ? 'active' : '' }}">
+            <i class="bi bi-person"></i> 👤 Profil Saya</a>
         <a href="/logout" class="text-danger fw-bold">🚪 Keluar</a>
     </div>
 

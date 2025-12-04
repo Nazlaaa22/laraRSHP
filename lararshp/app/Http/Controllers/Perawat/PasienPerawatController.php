@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Pet;
 use App\Models\RekamMedis;
 use App\Models\KategoriKlinis;
+use App\Models\DetailRekamMedis;
 use App\Models\KodeTindakanTerapi;
 use Illuminate\Http\Request;
 
@@ -39,25 +40,78 @@ class PasienPerawatController extends Controller
 
     public function storeRekamMedis(Request $request, $id)
     {
-        $request->validate([
-            'tanggal' => 'required|date',
-            'diagnosis' => 'required|string',
-            'kategori_klinis' => 'required',
-            'perawatan' => 'required',
-            'catatan' => 'nullable'
-        ]);
-
-        RekamMedis::create([
+        $rekam = RekamMedis::create([
             'idpet' => $id,
             'tanggal' => $request->tanggal,
-            'judul' => $request->diagnosis,
-            'catatan' => $request->catatan,
-            'idkategori_klinis' => $request->kategori_klinis,
+            'diagnosa' => $request->diagnosis,
+            'anamnesa' => $request->catatan,
+            'temuan_klinis' => null,
+            'dokter_pemeriksa' => null,
+        ]);
+
+        DetailRekamMedis::create([
+            'idrekam_medis' => $rekam->idrekam_medis,
             'idkode_tindakan_terapi' => $request->perawatan,
-            'dokter_pemeriksa' => session('idperawat')  // FIX DONE
         ]);
 
         return back()->with('success', 'Rekam medis berhasil ditambahkan');
+    }
+
+    public function show($id)
+    {
+        $rekam = RekamMedis::with('detail.tindakan')->findOrFail($id);
+        return view('perawat.pasien.show_rekam', compact('rekam'));
+    }
+
+    public function edit($id)
+    {
+        $rekam = RekamMedis::with('detail.tindakan')->findOrFail($id);
+        $kategori = KategoriKlinis::all();
+        $tindakan = KodeTindakanTerapi::all();
+
+        return view('perawat.pasien.edit_rekam', compact('rekam', 'kategori', 'tindakan'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'tanggal' => 'required|date',
+            'diagnosa' => 'required|string',
+            'perawatan' => 'required',
+            'catatan' => 'nullable|string'
+        ]);
+
+        $rekam = RekamMedis::findOrFail($id);
+        $rekam->tanggal = $request->tanggal;
+        $rekam->diagnosa = $request->diagnosa;
+        $rekam->anamnesa = $request->catatan;
+        $rekam->save();
+
+        // Update tabel detail_rekam_medis
+        DetailRekamMedis::updateOrCreate(
+            ['idrekam_medis' => $rekam->idrekam_medis],
+            ['idkode_tindakan_terapi' => $request->perawatan]
+        );
+
+        return redirect()->route('perawat.pasien.detail', $rekam->idpet)
+                        ->with('success', 'Rekam medis berhasil diperbarui!');
+    }
+
+    public function delete($id)
+    {
+        DetailRekamMedis::where('idrekam_medis', $id)->delete();
+        RekamMedis::where('idrekam_medis', $id)->delete();
+
+        return back()->with('success', 'Rekam medis berhasil dihapus!');
+    }
+
+    public function deleteRekamMedis($id)
+    {
+        \App\Models\DetailRekamMedis::where('idrekam_medis', $id)->delete();
+
+        \App\Models\RekamMedis::where('idrekam_medis', $id)->delete();
+
+        return back()->with('success', 'Rekam medis berhasil dihapus');
     }
 
 

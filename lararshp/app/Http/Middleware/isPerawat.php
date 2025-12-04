@@ -17,4 +17,5 @@ class isPerawat
     {
         return $next($request);
     }
+
 }

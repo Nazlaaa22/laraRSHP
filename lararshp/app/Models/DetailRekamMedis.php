@@ -15,4 +15,12 @@ class DetailRekamMedis extends Model
         'idkode_tindakan_terapi',
         'detail'
     ];
+
+    public function tindakan()
+    {
+        return $this->belongsTo(KodeTindakanTerapi::class, 'idkode_tindakan_terapi', 'idkode_tindakan_terapi');
+    }
+
 }
+
+

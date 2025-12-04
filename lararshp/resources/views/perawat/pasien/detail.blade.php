@@ -87,65 +87,75 @@
 
         <!-- Modal Tambah Rekam Medis -->
         <div class="modal fade" id="tambahRekamMedis" tabindex="-1">
-        <div class="modal-dialog">
-            <form action="{{ route('perawat.rekam.store', $pet->idpet) }}" method="POST" class="modal-content">
-            @csrf
+            <div class="modal-dialog">
+                <form action="{{ route('perawat.rekam.store', $pet->idpet) }}" method="POST" class="modal-content">
+                @csrf
 
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold">➕ Tambah Rekam Medis</h5>
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">➕ Tambah Rekam Medis</h5>
+                </div>
+
+                <div class="modal-body">
+
+                    <label>Tanggal</label>
+                    <input type="date" name="tanggal" class="form-control mb-3" required>
+
+                    <label>Diagnosis</label>
+                    <input type="text" name="diagnosis" class="form-control mb-3" placeholder="Contoh: Infeksi Saluran Pernapasan" required>
+
+                    <label>Kategori Klinis</label>
+                    <select name="kategori_klinis" class="form-control mb-3">
+                        @foreach($kategori as $k)
+                            <option value="{{ $k->idkategori_klinis }}">{{ $k->nama_kategori_klinis }}</option>
+                        @endforeach
+                    </select>
+
+                    <label>Perawatan / Tindakan</label>
+                    <select name="perawatan" class="form-control mb-3">
+                        @foreach($tindakan as $t)
+                            <option value="{{ $t->idkode_tindakan_terapi }}">
+                                {{ $t->kode }} - {{ $t->deskripsi_tindakan_terapi }}
+                            </option>
+                        @endforeach
+                    </select>
+
+                    <label>Catatan</label>
+                    <textarea name="catatan" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Simpan</button>
+                </div>
+
+                </form>
             </div>
-
-            <div class="modal-body">
-
-                <label>Tanggal</label>
-                <input type="date" name="tanggal" class="form-control mb-3" required>
-
-                <label>Diagnosis</label>
-                <input type="text" name="diagnosis" class="form-control mb-3" placeholder="Contoh: Infeksi Saluran Pernapasan" required>
-
-                <label>Kategori Klinis</label>
-                <select name="kategori_klinis" class="form-control mb-3">
-                @foreach($kategori as $k)
-                    <option value="{{ $k->idkategori_klinis }}">{{ $k->nama_kategori_klinis }}</option>
-                @endforeach
-                </select>
-
-                <label>Perawatan / Tindakan</label>
-                <select name="perawatan" class="form-control mb-3">
-                @foreach($tindakan as $t)
-                    <option value="{{ $t->idkode_tindakan_terapi }}">
-                    {{ $t->kode }} - {{ $t->deskripsi_tindakan_terapi }}
-                    </option>
-                @endforeach
-                </select>
-
-                <label>Catatan</label>
-                <textarea name="catatan" class="form-control" rows="3"></textarea>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-success">Simpan</button>
-            </div>
-
-            </form>
         </div>
-        </div>
 
-
+        {{-- LIST REKAM MEDIS --}}
         @forelse ($rekamMedis as $r)
             <div class="border rounded-3 p-3 mb-3 shadow-sm bg-white">
-                <h5 class="fw-bold m-0">{{ $r->judul }}</h5>
+                <h5 class="fw-bold m-0">{{ $r->diagnosa }}</h5>
                 <p class="small text-muted mt-1">📅 {{ $r->tanggal }}</p>
 
                 <p class="mt-2">
-                    <strong>Perawatan:</strong> {{ $r->detail->detail ?? '-' }}
+                    <strong>Perawatan:</strong>
+                    @forelse ($r->detail as $d)
+                        {{ $d->tindakan->deskripsi_tindakan_terapi ?? '-' }}
+                    @empty
+                        -
+                    @endforelse
+                    <p><strong>Catatan:</strong> {{ $r->anamnesa ?? '-' }}</p>
                 </p>
 
                 <div class="d-flex gap-3 mt-2">
-                    <a href="#" class="text-primary">👁 Lihat</a>
-                    <a href="#" class="text-success">✏ Edit</a>
-                    <a href="#" class="text-danger">🗑 Hapus</a>
+                    <a href="{{ route('perawat.rekam.detail', $r->idrekam_medis) }}" class="text-primary">👁 Lihat</a>
+                    <a href="{{ route('perawat.rekam.edit', $r->idrekam_medis) }}" class="text-success">✏ Edit</a>
+                    <form action="{{ route('perawat.rekam.delete', $r->idrekam_medis) }}" method="POST" onsubmit="return confirm('Hapus rekam medis ini?')">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-link text-danger p-0 m-0">🗑 Hapus</button>
+                    </form>
                 </div>
             </div>
         @empty

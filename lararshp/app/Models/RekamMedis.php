@@ -13,9 +13,10 @@ class RekamMedis extends Model
     protected $fillable = [
         'idpet',
         'tanggal',
-        'keluhan',
+        'anamnesa',
+        'temuan_klinis',
         'diagnosa',
-        'status'
+        'dokter_pemeriksa'
     ];
 
     public function detail()
